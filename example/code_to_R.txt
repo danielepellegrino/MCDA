@@ -1,0 +1,43 @@
+
+# Call library
+
+library(RankAggreg)
+
+# DMs' weights
+
+y <- c(0.6, 0.1, 0.1, 0.1, 0.1)
+
+# DMs' alternatives ranked
+
+x <- matrix(c(
+'A4','A1','A2','A3',
+'A4','A1','A2','A3',
+'A2','A4','A1','A3',
+'A4','A1','A3','A2',
+'A3','A4','A2','A1'), byrow=TRUE, ncol=4)
+
+# DMs' rankings' values
+
+c <- matrix(c(
+3.33,0.2857,0.0152,-3.0857,
+5.6916,-0.0217,-0.8552,-1.0305,
+1.0981,0.8932,0.5609,-4.9045,
+13.5824,-0.5279,-0.7982,-3.0296,
+5.1972,-0.0398,-0.0654,-3.7715), byrow=TRUE, ncol=4)
+
+# using the Cross-Entropy Monte-Carlo algorithm
+
+(CES <- RankAggreg(x, 4, c, 'CE',importance = y, 'Spearman', rho=.1, N=100, convIn=7))
+plot(CES)
+
+(CEK <- RankAggreg(x, 4, c, 'CE',importance = y, 'Kendall', rho=.1, N=100, convIn=7))
+plot(CEK)
+
+# using the Genetic algorithm
+
+(GAS <- RankAggreg(x, 4, c, 'GA',importance = y, 'Spearman'))
+plot(GAS)
+
+(GAK <- RankAggreg(x, 4, c, 'GA',importance = y, 'Kendall'))
+plot(GAK)
+
